@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            overflow-x: hidden;
+            /* To prevent horizontal scrolling */
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            padding-right: 20px;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        h1 {
+            padding: 20px;
+            text-align: center;
+            margin-top: 80px;
+            /* Adjusted margin for space below fixed navbar */
+            color: white;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .blog-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .blog-box h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .blog-box p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .blog-box form {
+            display: flex;
+            gap: 10px;
+            display: inline;
+        }
+
+        .blog-box button {
+            display: inline;
+            width: 100px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .blog-box button:hover {
+            background-color: #ffcc00;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h3>UBlogs Admin</h3>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/admin/blogs">Pending-Blogs</a></li>
+            <li><a href="/dashboard">Publish-Blogs</a></li>
+            <!-- Add more admin-specific links as needed -->
+        </ul>
+        <ul>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <h1 style="color: #333;">Welcome, Admin!</h1>
+
+    <section>
+        <h2>Pending Blogs for Approval</h2>
+        {{#each blogs as |blog|}}
+        <div class="blog-box">
+            <h3 style="display: inline;">{{blog.title}} {{#unless blog.isPost}} (NOT PUBLISHED) {{/unless}}</h3>
+            {{#unless blog.isPost}}
+            <form class="query-buttons" action="/approve/{{blog.id}}" method="POST">
+                <button type="submit">Approve</button>
+            </form>
+            <form class="query-buttons" action="/reject/{{blog.id}}" method="POST">
+                <button type="submit">Reject</button>
+            </form>
+            {{/unless}}
+            <p>{{blog.content}}</p>
+        </div>
+        {{/each}}
+    </section>
+</body>
+
+</html>

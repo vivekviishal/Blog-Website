@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 60px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        section {
+            width: 80%;
+            margin: 20px 0;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        .blog-content {
+            height: 150px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            resize: vertical;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            color: #ffcc00;
+        }
+
+        .blog {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .blog h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .blog p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .blog-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .blog-box h3 {
+            color: #333;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        .blog-box p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        span {
+            color: #ffcc00;
+            display: inline;
+
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/blogs">All Blogs</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <h1>Welcome, {{user.username}}!</h1>
+
+    <form action="/blogs" method="post">
+        <h2>Write a New Blog</h2>
+        <input type="text" name="title" placeholder="Enter Blog Title">
+        <textarea name="content" class="blog-content" placeholder="Enter Blog Content"></textarea>
+        <button type="submit">Publish Blog</button>
+    </form>
+
+    <section>
+        <h2>Your Blogs:</h2>
+        {{#each blogs as |blog|}}
+        <div class="blog-box">
+            <h3 style="display: inline">{{blog.title}} <span>{{#unless blog.isPost}}(NOT PUBLISHED){{/unless}}</span>
+            </h3>
+            <p>{{blog.content}}</p>
+        </div>
+        {{/each}}
+    </section>
+
+</body>
+
+</html>
